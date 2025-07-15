@@ -29,7 +29,7 @@ jobs:
         run: dotnet test --verbosity normal
 
       - name: Publish API
-        run: dotnet publish Singular.Products.Sales.Api/Singular.Products.Sales.Api.csproj -c Release -o ./publish
+        run: dotnet publish src/Singular.Products.Sales.Api/Singular.Products.Sales.Api.csproj -c Release -o ./publish
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
