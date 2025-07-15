@@ -1,0 +1,38 @@
+name: .NET 8 CI
+
+on:
+  push:
+    branches: [ "*" ]      # Triggers on push to any branch
+  pull_request:
+    branches: [ "main" ]   # Triggers on PR to main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build solution
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Run tests
+        run: dotnet test --verbosity normal
+
+      - name: Publish API
+        run: dotnet publish src/Singular.Products.Sales.Api/Singular.Products.Sales.Api.csproj -c Release -o ./publish
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-publish
+          path: ./publish
