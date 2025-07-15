@@ -1,6 +1,11 @@
+using Microsoft.EntityFrameworkCore;
+using Singular.Products.Sales.Infrastructure.Persistence;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddDbContext<SalesDbContext>(options =>
+    options.UseInMemoryDatabase("SalesDb"));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
